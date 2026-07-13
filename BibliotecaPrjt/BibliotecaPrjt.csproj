@@ -6,4 +6,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\sofia\source\repos\BibliotecaWebProect\BibliotecaPrjt\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\sofia\source\repos\BibliotecaWebProect\BibliotecaPrjt\.editorconfig" />
+  </ItemGroup>
+
 </Project>

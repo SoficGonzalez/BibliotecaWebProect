@@ -7,10 +7,8 @@
 <h1>@ViewData["Title"]</h1>
 
 <form asp-action="Create" method="post" enctype="multipart/form-data">
-    
-
-    
-
+    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+   
     <div class="mb-3">
         <label asp-for="Titulo"></label>
         <input asp-for="Titulo" class="form-control" />
@@ -28,6 +26,12 @@
         <input asp-for="Categoria" class="form-control" />
         <span asp-validation-for="Categoria"></span>
     </div>
+
+    <div class="mb-3">
+        <label class="form-label">Portada del Libro</label>
+        <input type="file" name="imagenPortada" class="form-control" accept="image/*" />
+    </div>
+
 
     <div class="mb-3">
         <label asp-for="Precio"></label>

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BibliotecaPrjt.Models;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace BibliotecaPrjt.Controllers
 {
@@ -54,11 +56,39 @@ namespace BibliotecaPrjt.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Libro libro)
+        public IActionResult Create(Libro libro, IFormFile imagenPortada)
         {
             if (!ModelState.IsValid)
             {
                 return View(libro);
+            }
+
+            if (imagenPortada != null && imagenPortada.Length > 0)
+            { 
+                var extension = Path.GetExtension(imagenPortada.FileName);
+                var nombreArchivoUnico = Guid.NewGuid().ToString() + extension;
+
+                var rutaCarpeta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "libros");
+
+                if (!Directory.Exists(rutaCarpeta))
+                {
+                    Directory.CreateDirectory(rutaCarpeta);
+                }
+
+                var rutaCompleta = Path.Combine(rutaCarpeta, nombreArchivoUnico);
+
+                using (var stream = new FileStream(rutaCompleta, FileMode.Create))
+                {
+                    imagenPortada.CopyTo(stream);
+                }
+
+                
+                libro.ImageUrl = "/images/libros/" + nombreArchivoUnico;
+            }
+            else
+            {
+                
+                libro.ImageUrl = "/images/libros/default-book.png";
             }
 
             if (_libros.Any())

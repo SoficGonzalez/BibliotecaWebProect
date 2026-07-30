@@ -26,6 +26,16 @@
         {
             <tr>
                 <td>@libro.ID</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(libro.ImageUrl))
+                    {
+                        <img src="@libro.ImageUrl" alt="Portada de @libro.Titulo" style="width: 60px; height: 80px; object-fit: cover; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);" />
+                    }
+                    else
+                    {
+                        <span class="text-muted" style="font-size: 0.85rem;">Sin imagen</span>
+                    }
+                </td>
                 <td>@libro.Titulo</td>
                 <td>@libro.Autor</td>
                 <td>@libro.Categoria</td>

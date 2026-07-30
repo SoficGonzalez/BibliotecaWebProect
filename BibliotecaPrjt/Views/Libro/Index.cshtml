@@ -1,24 +1,28 @@
-﻿@using BibliotecaPrjt.Models
+﻿@model IEnumerable<BibliotecaPrjt.Models.Libro>
 @{
-    List<Libro> libros = ViewBag.Libro;
+    ViewData["Title"] = "Catalogo de Libros";
 }
 
+<h2>@ViewData["Title"]</h2>
 
-<h2>Catalogo de Libros</h2>
+<a class="btn btn-primary mb-3" asp-action="Create">Nuevo Libro +</a>
 
 <table class="table table-striped">
     <thead>
         <tr>
             <th>ID</th>
+            <th>Imagen</th>
             <th>Titulo</th>
             <th>Autor</th>
             <th>Categoria</th>
             <th>Precio</th>
             <th>Estado</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var libro in libros)
+        @foreach (var libro in Model)
         {
             <tr>
                 <td>@libro.ID</td>
@@ -27,14 +31,20 @@
                 <td>@libro.Categoria</td>
                 <td>$@libro.Precio</td>
                 <td>
-                    @if (@libro.Disponible)
+                    @if (libro.Disponible)
                     {
-                        <spam class="badge bg-success">Disponible</spam>
+                        <span class="badge bg-success">Disponible</span>
                     }
                     else
                     {
-                        <spam class="badge bg-danger">Prestado</spam>
+                        <span class="badge bg-danger">Prestado</span>
                     }
+                </td>
+                <td>
+                    <a class="btn btn-outline-primary btn-sm" asp-action="Edit" asp-route-id="@libro.ID">Editar</a>
+                </td>
+                <td>
+                    <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@libro.ID">Eliminar</a>
                 </td>
             </tr>
         }

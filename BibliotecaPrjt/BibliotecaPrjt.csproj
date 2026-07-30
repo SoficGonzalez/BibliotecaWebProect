@@ -14,4 +14,8 @@
     <None Include="C:\Users\sofia\source\repos\BibliotecaWebProect\BibliotecaPrjt\.editorconfig" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 </Project>

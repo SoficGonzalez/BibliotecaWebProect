@@ -1,42 +1,31 @@
-﻿@using BibliotecaPrjt.Models
+﻿@model IEnumerable<BibliotecaPrjt.Models.Autor>
 @{
-    List<Autor> autores = ViewBag.Autor;
+    ViewData["Title"] = "Listado de Autores";
 }
 
+<h1>@ViewData["Title"]</h1>
+<p>Hay @Model.Count() autores registrados</p>
 
-<h2>Catalogo de Autores</h2>
+<a class="btn btn-primary" asp-action="Create">Nuevo Autor +</a>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Nacionalidad</th>
-            <th>Fecha De Nacimiento</th>
-            <th>Activo</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var autor in autores)
-        {
-            <tr>
-                <td>@autor.ID</td>
-                <td>@autor.Nombre</td>
-                <td>@autor.Apellido</td>
-                <td>@autor.Nacionalidad</td>
-                <td>@autor.FechaDeNacimiento</td>
-                <td>
-                    @if (@autor.Activo)
-                    {
-                        <spam class="badge bg-success">Activo</spam>
-                    }
-                    else
-                    {
-                        <spam class="badge bg-danger">Inactivo</spam>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="row">
+    @foreach(var autor in Model)
+    {
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5>@autor.Nombre</h5>
+                    <h6>@autor.Nacionalidad</h6>
+                    <p>Edad: @(DateTime.Now.Year - autor.FechaDeNacimiento.Year)</p>
+
+                    <a asp-action="Details" asp-route-id="@autor.ID">Ver mas</a>
+                    <a asp-action="Edit" asp-route-id="@autor.ID">Editar</a>
+                    <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@autor.ID">Eliminar</a>
+                    
+                </div>
+
+            </div>
+        </div>
+    }
+</div>
+

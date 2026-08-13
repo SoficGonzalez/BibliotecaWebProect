@@ -29,3 +29,20 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+/*===============================================
+    Variables
+ ================================================*/
+:root {
+    --color-principal: #3b3f2f;
+    --color-secundario: #8a4b2a;
+    --color-texto: #edexdc;
+    --color-blanco:white;
+}
+
+.about-hearder{
+    background:var(--color-principal);
+    color : var(--color-blanco);
+    text-align:center;
+    padding: 40px;
+}

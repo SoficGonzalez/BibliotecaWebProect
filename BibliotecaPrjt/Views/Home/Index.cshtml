@@ -1,9 +1,127 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿<div class="container mt-5">
+    <div class="row align-items-center">
+       <div class="col-md-6">
+            <h1 class="display-4">
+                BibliotecaMVC
+            </h1>
+            <p class="lead">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Mauris fermentum fermentum ex, eget pharetra mi ornare sed. Aliquam erat volutpat.
+                Sed eget tortor nisi. Fusce sed magna nec urna tincidunt porta sed hendrerit velit.
+                Maecenas vel urna ut neque condimentum ultrices vel eget nulla. Phasellus et dignissim libero.
+                Integer mollis nisl a turpis cursus, ut interdum sem volutpat.
+                Vivamus sit amet mi imperdiet, ornare purus eu, accumsan nisi. Sed eu ultricies velit.
+                Donec vitae tincidunt arcu, id fermentum enim. Nulla non egestas magna.
+                Cras pretium massa sed massa finibus, non pellentesque odio ullamcorper.
+                Donec sed euismod nibh. Nunc at pellentesque elit. Aliquam erat volutpat.
 
-<div class="text-center">
-    <h1>Sistema de Gestion de Biblioteca</h1>
-    <p>Bienvenidos al sistema desarrollado con ASP.Net Core MVC.</p>
+                Nulla laoreet rutrum nibh, vitae rhoncus lorem sodales sed. Aenean congue sagittis mi, ut pretium est porta scelerisque.
+                Nam justo arcu, auctor ac pulvinar vitae, posuere eu odio. Cras aliquet purus sed tellus lobortis, vel ultrices leo finibus.
+                Vestibulum iaculis aliquam ex, id rhoncus risus pellentesque ut. Nullam eget dictum velit.
+                Nulla quis augue et mauris scelerisque blandit ac quis nibh. Integer scelerisque lorem scelerisque diam tincidunt egestas.
+                Donec at condimentum sem. Mauris at tristique nisl. Suspendisse scelerisque convallis ex sed condimentum.
+                Mauris sollicitudin et odio non sollicitudin. Suspendisse consequat scelerisque dolor vitae ultricies.
+                Aenean ligula magna, consequat nec nisi non, euismod ullamcorper sapien. In id dolor nulla.
+            </p>
+            <a asp-controller="Home" asp-action="AcercaDe" class="btn btn-primary">Conoce mas sobre nosotros.</a>
+       </div>
 
+       <div class="col-md-6 text-center">
+            <img src="https://picsum.photos/500/350" class=" img-fluid rounded shadow" alt="Biblioteca" />
+       </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">
+        Servicios de la Biblioteca
+    </h2>
+
+    <div class="row">
+        <!--Servicio1-->
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm">
+                <img src="https://picsum.photos/200/150" class="card-img-top" alt="Imagen">
+                <div class="card-body p-2">
+                    <p class="card-text small mb-1">
+                        Some quick example text to build on the card title and make up the bulk of the card’s content.
+                    </p>
+                    <div class="accordion accordion-flush" id="accordionServicio1">
+                        <div class="accordion-item border-0">
+                            <div id="collapseServicio1" class="accordion-collapse collapse" data-bs-parent="#accordionServicio1">
+                                <div class="accordion-body p-1 small">
+                                    Some quick example text to build on the card title and make up the bulk of the card’s content.
+                                </div>
+                            </div>
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed bg-transparent shadow-none p-1 fw-normal fs-6" type="button" data-bs-toggle="collapse" data-bs-target="#collapseServicio1" aria-expanded="false" aria-controls="collapseServicio1">
+                                   
+                                </button>
+                            </h2> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Servicio2-->
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm">
+                <img src="https://picsum.photos/200/150" class="card-img-top" alt="Imagen">
+                <div class="card-body p-2">
+                    <p class="card-text small mb-1">
+                        Some quick example text to build on the card title and make up the bulk of the card’s content.
+                    </p>
+                    <div class="accordion accordion-flush" id="accordionServicio2">
+                        <div class="accordion-item border-0">
+                            <div id="collapseServicio2" class="accordion-collapse collapse" data-bs-parent="#accordionServicio2">
+                                <div class="accordion-body p-1 small">
+                                    Some quick example text to build on the card title and make up the bulk of the card’s content.
+                                </div>
+                            </div>
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed bg-transparent shadow-none p-1 fw-normal fs-6" type="button" data-bs-toggle="collapse" data-bs-target="#collapseServicio2" aria-expanded="false" aria-controls="collapseServicio2">
+                                </button>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Servicio3-->
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm">
+                <img src="https://picsum.photos/200/150" class="card-img-top" alt="Imagen">
+                <div class="card-body p-2">
+                    <p class="card-text small mb-1">
+                        Some quick example text to build on the card title and make up the bulk of the card’s content.
+                    </p>
+                    <div class="accordion accordion-flush" id="accordionServicio3">
+                        <div class="accordion-item border-0">
+                            <div id="collapseServicio3" class="accordion-collapse collapse" data-bs-parent="#accordionServicio3">
+                                <div class="accordion-body p-1 small">
+                                    Some quick example text to build on the card title and make up the bulk of the card’s content.
+                                </div>
+                            </div>
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed bg-transparent shadow-none p-1 fw-normal fs-6" type="button" data-bs-toggle="collapse" data-bs-target="#collapseServicio3" aria-expanded="false" aria-controls="collapseServicio3">
+                                </button>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<div class="container mt-5">
+    <div class="bg-primary text-white rounded p-5 text-center">
+        <h2>Explora nuestra biblioteca virtual</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            Mauris fermentum fermentum ex, eget pharetra mi ornare sed. 
+            Aliquam erat volutpat. Sed eget tortor nisi. Fusce sed magna nec urna tincidunt porta sed hendrerit velit. 
+            Maecenas vel urna ut neque condimentum ultrices vel eget nulla. 
+        </p>
+        <a asp-controller="Home" asp-action="AcercaDe" class="btn btn-outline-light">Acerca de la biblioteca.</a>
+    </div>
 </div>

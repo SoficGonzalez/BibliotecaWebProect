@@ -15,6 +15,7 @@ html {
 html {
   position: relative;
   min-height: 100%;
+  font-size: 14px;
 }
 
 body {
@@ -36,13 +37,157 @@ body {
 :root {
     --color-principal: #3b3f2f;
     --color-secundario: #8a4b2a;
-    --color-texto: #edexdc;
+    --color-acento: #5c6b4f;
+    --color-texto: #ededc;
     --color-blanco:white;
 }
 
-.about-hearder{
-    background:var(--color-principal);
-    color : var(--color-blanco);
-    text-align:center;
+.about-header {
+    background: linear-gradient(135deg,var(--color-principal), #2c2f22 );
+    color: var(--color-blanco);
+    text-align: center;
+    padding: 50px 20px;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+.about-header h1 {
+    margin: 0 0 10px 0;
+    font-size: 2.2rem;
+}
+.about-header p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 1.05rem;
+}
+.about-container {
+    display: flex;
+    flex-direction: column;
+    gap:25px;
     padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: flex-start;
+}
+.about-content{
+    background:white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow:0px 2px 10px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+.about-content:hover{
+    transform:translateY(-5px);
+}
+.about-content h2{
+    margin-top:0;
+}
+.about-container p{
+    line-height: 1.6;
+    color: #444;
+}
+.about-info {
+        display: flex;
+        flex-direction:row;
+        gap:30px;
+}
+.info-card{
+    flex:1;
+    color: var(--color-texto);
+    padding: 22px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.15);
+    transition: 0.3s;
+}
+.info-card + .info-card{
+    margin-left:10px;
+}
+.info-card:hover{
+    transform:translateY(-5px);
+}
+.info-card h3{
+    margin: 0 0 12px 0;
+    font-size: 1.3rem;
+}
+.info-card h3::after{
+    content:"";
+    display:block;
+    width: 40px;
+    height: 3px;
+    background: currentColor;
+    opacity: 0.5;
+    margin-top: 8px;
+}
+.info-card p{
+    line-height: 1.6;
+    margin: 0;
+    opacity: 0.95;
+}
+.mision-card{
+    background: var(--color-secundario);
+}
+.vision-card{
+    background: var(--color-acento);
+}
+.team-section{
+    padding: 20px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.team-section img{
+    width:100%;
+    border-radius:10px;
+    display:block;
+}
+.team-section figcaption{
+    text-align:center;
+    margin-top:10px;
+    color: gray;
+    font-style:oblique;
+}
+
+@media (max-width: 991px) {
+    .about-container {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-header {
+        padding: 35px 20px;
+    }
+
+        .about-header h1 {
+            font-size: 1.7rem;
+        }
+
+    .about-container {
+        padding: 20px;
+        gap: 20px;
+    }
+    .about-info{
+        flex-direction:column;
+    }
+
+    .about-content,
+    .info-card {
+        padding: 18px;
+    }
+
+    .team-section {
+        padding: 10px 20px 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-header h1 {
+        font-size: 1.4rem;
+    }
+
+    .about-header p {
+        font-size: 0.9rem;
+    }
 }

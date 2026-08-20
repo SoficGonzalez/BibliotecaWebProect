@@ -194,4 +194,4 @@ C:\Users\sofia\source\repos\BibliotecaWebProect\BibliotecaPrjt\obj\Debug\net10.0
 C:\Users\sofia\source\repos\BibliotecaWebProect\BibliotecaPrjt\obj\Debug\net10.0\BibliotecaPrjt.pdb
 C:\Users\sofia\source\repos\BibliotecaWebProect\BibliotecaPrjt\obj\Debug\net10.0\BibliotecaPrjt.genruntimeconfig.cache
 C:\Users\sofia\source\repos\BibliotecaWebProect\BibliotecaPrjt\obj\Debug\net10.0\ref\BibliotecaPrjt.dll
-C:\Users\sofia\source\repos\BibliotecaWebProect\BibliotecaPrjt\obj\Debug\net10.0\compressed\2ahe5me6ga-{0}-9xpaqhidbv-9xpaqhidbv.gz
+C:\Users\sofia\source\repos\BibliotecaWebProect\BibliotecaPrjt\obj\Debug\net10.0\compressed\2ahe5me6ga-{0}-ue9y2urixm-ue9y2urixm.gz

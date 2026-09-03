@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BibliotecaPrjt.Models;
+using BibliotecaPrjt.Repositories;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 
@@ -7,39 +8,27 @@ namespace BibliotecaPrjt.Controllers
 {
     public class LibroController : Controller
     {
-        private static List<Libro> _libros = new List<Libro>
-    {
-        new Libro
-        {
-            ID = 1,
-            Titulo = "Cien años de soledad ",
-            Autor = "Gabriel García Márquez",
-            Categoria = "Realismo Magico",
-            Precio = 25.15M,
-            Disponible = true
+        private readonly IRepositorioLibro _repositorio;
 
-        },
-        new Libro
+        public LibroController(IRepositorioLibro repositorio)
         {
-            ID = 2,
-            Titulo = "Don Quijote de la Mancha",
-            Autor = "Miguel de Cervantes",
-            Categoria = "Novela",
-            Precio = 30.15M,
-            Disponible = false
-
+            _repositorio = repositorio;
         }
-    };
+
+        private List<Libro> ObtenerListaInterna()
+        {
+            return _repositorio.ObtenerTodos() as List<Libro> ?? new List<Libro>();
+        }
 
         public IActionResult Index()
         {
-
-            return View(_libros);
+            var libros = _repositorio.ObtenerTodos();
+            return View(libros);
         }
 
         public IActionResult Details(int id)
         {
-            var libro = _libros.FirstOrDefault(x => x.ID == id);
+            var libro = _repositorio.ObtenerTodos().FirstOrDefault(x => x.ID == id);
             if (libro == null)
             {
                 return NotFound();
@@ -54,6 +43,7 @@ namespace BibliotecaPrjt.Controllers
             return View();
         }
 
+        //Non functional
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Libro libro, IFormFile imagenPortada)
@@ -64,7 +54,7 @@ namespace BibliotecaPrjt.Controllers
             }
 
             if (imagenPortada != null && imagenPortada.Length > 0)
-            { 
+            {
                 var extension = Path.GetExtension(imagenPortada.FileName);
                 var nombreArchivoUnico = Guid.NewGuid().ToString() + extension;
 
@@ -82,32 +72,28 @@ namespace BibliotecaPrjt.Controllers
                     imagenPortada.CopyTo(stream);
                 }
 
-                
+
                 libro.ImageUrl = "/images/libros/" + nombreArchivoUnico;
             }
             else
             {
-                
+
                 libro.ImageUrl = "/images/libros/default-book.png";
             }
 
-            if (_libros.Any())
-            {
-                libro.ID = _libros.Max(x => x.ID) + 1;
-            }
-            else
-            {
-                libro.ID = 1;
-            }
+            var listaLibros = ObtenerListaInterna();
 
-            _libros.Add(libro);
+            libro.ID = listaLibros.Any() ? listaLibros.Max(x => x.ID) + 1 : 1;
+
+            listaLibros.Add(libro);
             return RedirectToAction(nameof(Index));
         }
 
 
+        //Non functional
         public IActionResult Edit(int id)
         {
-            var libro = _libros.FirstOrDefault(_ => _.ID == id);
+            var libro = _repositorio.ObtenerTodos().FirstOrDefault(_ => _.ID == id);
             if (libro == null)
             {
                 return NotFound();
@@ -115,6 +101,8 @@ namespace BibliotecaPrjt.Controllers
             return View(libro);
         }
 
+
+        //Non functional
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Libro libro)
@@ -129,7 +117,7 @@ namespace BibliotecaPrjt.Controllers
                 return View(libro);
             }
 
-            var existente = _libros.FirstOrDefault(x => x.ID == id);
+            var existente = _repositorio.ObtenerTodos().FirstOrDefault(x => x.ID == id);
             if (existente == null)
             {
                 return NotFound();
@@ -144,9 +132,10 @@ namespace BibliotecaPrjt.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //Non functional
         public IActionResult Delete(int id)
         {
-            var libro = _libros.FirstOrDefault(x => x.ID == id);
+            var libro = _repositorio.ObtenerTodos().FirstOrDefault(x => x.ID == id);
             if (libro == null)
             {
                 return NotFound();
@@ -154,17 +143,19 @@ namespace BibliotecaPrjt.Controllers
             return View(libro);
         }
 
+        //Non functional
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            var libro = _libros.FirstOrDefault(x => x.ID == id);
+            var listaLibros = ObtenerListaInterna();
+            var libro = listaLibros.FirstOrDefault(x => x.ID == id);
             if (libro == null)
             {
                 return NotFound();
             }
 
-            _libros.Remove(libro);
+            listaLibros.Remove(libro);
             return RedirectToAction(nameof(Index));
 
         }

@@ -11,10 +11,6 @@ namespace BibliotecaPrjt.Controllers
             return View();
         }
 
-        public IActionResult Categorias()
-        {
-            return View();
-        }
 
         public IActionResult Usuario()
         {

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<BibliotecaPrjt.Models.Categoria>
+@{
+    ViewData["Title"] = "Categorias";
+}
+
+<div>
+    <h2 class="d-flex justify-content-between align-items-center mb-3">
+        Listado de categorias.
+    </h2>
+</div>
+
+<a class="btn btn-primary" asp-controller="Categorias" asp-action="Create">Agregar Categoria</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Descripcion
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var categoria in Model)
+        {
+            <tr>
+                <td>@categoria.ID</td>
+                <td>@categoria.Nombre</td>
+                <td>@categoria.Descripcion</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script>
+        var mensaje = '@(TempData["SuccessMessage"]?? "")';
+        if(mensaje)
+        {
+            Swal.fire({
+                icon: 'success',
+                title: 'Exito',
+                text: mensaje,
+                timer: 2000,
+                showConfirmButton:false
+            })
+        }
+    </script>
+}

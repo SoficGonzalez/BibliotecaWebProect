@@ -1,50 +1,58 @@
 ﻿@model BibliotecaPrjt.Models.Libro
-
 @{
     ViewData["Title"] = "Crear Libro";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="form-libro-wrapper">
+    <h1 class="form-libro-titulo">@ViewData["Title"]</h1>
 
-<form asp-action="Create" method="post" enctype="multipart/form-data">
-    <div asp-validation-summary="All" class="text-danger mb-3"></div>
-   
-    <div class="mb-3">
-        <label asp-for="Titulo"></label>
-        <input asp-for="Titulo" class="form-control" />
-        <span asp-validation-for="Titulo"></span>
-    </div>
+    <form asp-action="Create" method="post" enctype="multipart/form-data" class="form-libro">
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
-    <div class="mb-3">
-        <label asp-for="Autor"></label>
-        <input asp-for="Autor" class="form-control" />
-        <span asp-validation-for="Autor"></span>
-    </div>
+        <div class="form-libro-campo">
+            <label asp-for="Titulo"></label>
+            <input asp-for="Titulo" class="form-control" placeholder="Ej. La vegetariana" />
+            <span asp-validation-for="Titulo"></span>
+        </div>
 
-    <div class="mb-3">
-        <label asp-for="Categoria"></label>
-        <input asp-for="Categoria" class="form-control" />
-        <span asp-validation-for="Categoria"></span>
-    </div>
+        <div class="form-libro-fila">
+            <div class="form-libro-campo">
+                <label asp-for="Autor"></label>
+                <input asp-for="Autor" class="form-control" placeholder="Ej. Han Kang" />
+                <span asp-validation-for="Autor"></span>
+            </div>
 
-    <div class="mb-3">
-        <label class="form-label">Portada del Libro</label>
-        <input type="file" name="imagenPortada" class="form-control" accept="image/*" />
-    </div>
+            <div class="form-libro-campo">
+                <label asp-for="Categoria"></label>
+                <input asp-for="Categoria" class="form-control" placeholder="Ej. Ficción" />
+                <span asp-validation-for="Categoria"></span>
+            </div>
+        </div>
 
+        <div class="form-libro-fila">
+            <div class="form-libro-campo">
+                <label asp-for="Precio"></label>
+                <input asp-for="Precio" class="form-control" placeholder="0.00" />
+                <span asp-validation-for="Precio"></span>
+            </div>
 
-    <div class="mb-3">
-        <label asp-for="Precio"></label>
-        <input asp-for="Precio" class="form-control" />
-        <span asp-validation-for="Precio"></span>
-    </div>
+            <div class="form-libro-campo form-libro-check">
+                <label class="form-check">
+                    <input asp-for="Disponible" class="form-check-input" />
+                    <span asp-for="Disponible" class="form-check-label">Disponible</span>
+                </label>
+                <span asp-validation-for="Disponible"></span>
+            </div>
+        </div>
 
-    <div class="mb-3">
-        <label asp-for="Disponible" class="form-check-label"></label>
-        <input asp-for="Disponible"  class="form-check-input"/>
-        <span asp-validation-for="Disponible"></span>
-    </div>
+        <div class="form-libro-campo">
+            <label class="form-label">Portada</label>
+            <input type="file" name="imagenPortada" class="form-control" accept="image/*" />
+        </div>
 
-    <button type="submit" class="btn btn-success">Crear</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
-</form>
+        <div class="form-libro-acciones">
+            <a asp-action="Index" class="btn btn-link">Cancelar</a>
+            <button type="submit" class="btn btn-success">Crear libro</button>
+        </div>
+    </form>
+</div>

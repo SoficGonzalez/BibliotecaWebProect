@@ -3,32 +3,41 @@ using BibliotecaPrjt.Models;
 using BibliotecaPrjt.Repositories;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using BibliotecaPrjt.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace BibliotecaPrjt.Controllers
 {
     public class LibroController : Controller
     {
-        private readonly IRepositorioLibro _repositorio;
+        /* private readonly IRepositorioLibro _repositorio;
 
-        public LibroController(IRepositorioLibro repositorio)
+         public LibroController(IRepositorioLibro repositorio)
+         {
+             _repositorio = repositorio;
+         }
+
+         private List<Libro> ObtenerListaInterna()
+         {
+             return _repositorio.ObtenerTodos() as List<Libro> ?? new List<Libro>();
+         }*/
+
+        public readonly BibliotecaContext _context;
+        public LibroController(BibliotecaContext context)
         {
-            _repositorio = repositorio;
+            _context = context;
         }
 
-        private List<Libro> ObtenerListaInterna()
-        {
-            return _repositorio.ObtenerTodos() as List<Libro> ?? new List<Libro>();
-        }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var libros = _repositorio.ObtenerTodos();
+            var libros = await _context.Libros.ToListAsync();
             return View(libros);
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var libro = _repositorio.ObtenerTodos().FirstOrDefault(x => x.ID == id);
+            var libro = await _context.Libros.FindAsync(id);
             if (libro == null)
             {
                 return NotFound();
@@ -43,10 +52,10 @@ namespace BibliotecaPrjt.Controllers
             return View();
         }
 
-        //Non functional
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Libro libro, IFormFile imagenPortada)
+        public async Task<IActionResult> Create(Libro libro, IFormFile imagenPortada)
         {
             if (!ModelState.IsValid)
             {
@@ -81,17 +90,15 @@ namespace BibliotecaPrjt.Controllers
                 libro.ImageUrl = "/images/libros/default-book.png";
             }
 
-            var listaLibros = ObtenerListaInterna();
+            _context.Libros.Add(libro);
+            await _context.SaveChangesAsync();
 
-            libro.ID = listaLibros.Any() ? listaLibros.Max(x => x.ID) + 1 : 1;
-
-            listaLibros.Add(libro);
             return RedirectToAction(nameof(Index));
         }
 
 
         //Non functional
-        public IActionResult Edit(int id)
+       /* public IActionResult Edit(int id)
         {
             var libro = _repositorio.ObtenerTodos().FirstOrDefault(_ => _.ID == id);
             if (libro == null)
@@ -158,7 +165,7 @@ namespace BibliotecaPrjt.Controllers
             listaLibros.Remove(libro);
             return RedirectToAction(nameof(Index));
 
-        }
+        }*/
 
 
 

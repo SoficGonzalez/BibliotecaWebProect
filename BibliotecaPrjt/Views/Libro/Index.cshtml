@@ -3,60 +3,42 @@
     ViewData["Title"] = "Catalogo de Libros";
 }
 
-<h2>@ViewData["Title"]</h2>
+<div class="catalogo-header">
+    <div class="catalogo-header-spacer"></div>
+    <h2 class="catalogo-titulo">@ViewData["Title"]</h2>
+        <div class="catalogo-btn-wrapper">
+        <a class="btn btn-primary" asp-action="Create">Nuevo Libro +</a>
+        </div>
+</div>
 
-<a class="btn btn-primary mb-3" asp-action="Create">Nuevo Libro +</a>
+<div class="bento-grid">
+    @foreach (var libro in Model)
+    {
+        <div class="libro-card">
+            <span class="libro-estado badge @(libro.Disponible ? "bg-success" : "bg-danger")">
+                @(libro.Disponible ? "Disponible" : "Prestado")
+            </span>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Imagen</th>
-            <th>Titulo</th>
-            <th>Autor</th>
-            <th>Categoria</th>
-            <th>Precio</th>
-            <th>Estado</th>
-            <th>Editar</th>
-            <th>Eliminar</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var libro in Model)
-        {
-            <tr>
-                <td>@libro.ID</td>
-                <td>
-                    @if (!string.IsNullOrEmpty(libro.ImageUrl))
-                    {
-                        <img src="@libro.ImageUrl" alt="Portada de @libro.Titulo" style="width: 60px; height: 80px; object-fit: cover; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);" />
-                    }
-                    else
-                    {
-                        <span class="text-muted" style="font-size: 0.85rem;">Sin imagen</span>
-                    }
-                </td>
-                <td>@libro.Titulo</td>
-                <td>@libro.Autor</td>
-                <td>@libro.Categoria</td>
-                <td>$@libro.Precio</td>
-                <td>
-                    @if (libro.Disponible)
-                    {
-                        <span class="badge bg-success">Disponible</span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-danger">Prestado</span>
-                    }
-                </td>
-                <td>
-                    <a class="btn btn-outline-primary btn-sm" asp-action="Edit" asp-route-id="@libro.ID">Editar</a>
-                </td>
-                <td>
-                    <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@libro.ID">Eliminar</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+            <div class="libro-imagen">
+                @if (!string.IsNullOrEmpty(libro.ImageUrl))
+                {
+                    <img src="@libro.ImageUrl" alt="Portada de @libro.Titulo" />
+                }
+                else
+                {
+                    <div class="libro-imagen-vacia">Sin imagen</div>
+                }
+            </div>
+
+            <div class="libro-id">#@libro.ID</div>
+            <div class="libro-titulo">@libro.Titulo</div>
+            <div class="libro-autor">@libro.Autor</div>
+            <div class="libro-precio">$@libro.Precio</div>
+
+            <div class="libro-acciones">
+                <a class="btn btn-outline-primary btn-sm" asp-action="Edit" asp-route-id="@libro.ID">Editar</a>
+                <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@libro.ID">Eliminar</a>
+            </div>
+        </div>
+    }
+</div>

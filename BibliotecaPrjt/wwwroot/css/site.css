@@ -311,3 +311,179 @@ body {
     color: #555;
     margin: 0;
 }
+
+/*Catalogo libro css*/
+.catalogo-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.catalogo-header-spacer {
+    flex: 1;
+    visibility: hidden;
+}
+
+.catalogo-titulo {
+    flex: 1;
+    text-align: center;
+    margin: 0;
+}
+
+.catalogo-btn-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.bento-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+}
+
+.libro-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 220px;
+    padding: 1rem;
+    border: 1px solid #e2e2e2;
+    border-radius: 6px;
+    background: #fff;
+    text-align: center;
+}
+
+.libro-estado {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+}
+
+.libro-imagen {
+    width: 130px;
+    height: 170px;
+    margin-bottom: 0.6rem;
+}
+
+    .libro-imagen img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+
+.libro-imagen-vacia {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f2f2f2;
+    color: #888;
+    font-size: 0.85rem;
+    border-radius: 4px;
+}
+
+.libro-id {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.libro-titulo {
+    font-weight: 600;
+    margin-top: 0.15rem;
+}
+
+.libro-autor {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.libro-precio {
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+.libro-acciones {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+/* Formulario crear libro */
+.form-libro-wrapper {
+    max-width: 480px;
+    margin: 3rem auto;
+}
+
+.form-libro-titulo {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.form-libro {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.form-libro-fila {
+    display: flex;
+    gap: 1.1rem;
+}
+
+    .form-libro-fila .form-libro-campo {
+        flex: 1;
+    }
+
+.form-libro-campo label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 0.3rem;
+}
+
+.form-libro-campo .form-control {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0;
+    padding: 0.4rem 0.1rem;
+    box-shadow: none;
+}
+
+    .form-libro-campo .form-control:focus {
+        border-bottom-color: #198754;
+        box-shadow: none;
+    }
+
+.form-libro-check {
+    display: flex;
+    align-items: flex-end;
+}
+
+    .form-libro-check .form-check {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 0;
+    }
+
+    .form-libro-check .form-check-label {
+        font-size: 0.95rem;
+        color: #333;
+        font-weight: 400;
+        margin: 0;
+    }
+
+.form-libro-acciones {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}

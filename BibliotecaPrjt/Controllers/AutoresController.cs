@@ -1,37 +1,47 @@
 ﻿using BibliotecaPrjt.Models;
 using BibliotecaPrjt.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using BibliotecaPrjt.Data;
 
 namespace BibliotecaPrjt.Controllers
 {
     public class AutoresController : Controller
     {
 
-        public readonly IAutorService _repositorio;
+        /* public readonly IAutorService _repositorio;
 
-        public AutoresController(IAutorService repositorio) 
-        { 
-            _repositorio = repositorio;
-        }
-        
-        
-        private List<Autor> ObtenerListaInterna()
+         public AutoresController(IAutorService repositorio) 
+         { 
+             _repositorio = repositorio;
+         }
+
+
+         private List<Autor> ObtenerListaInterna()
+         {
+
+             return _repositorio.ObtenerAutores() as List<Autor> ?? new List<Autor>();
+
+         }*/
+
+        private readonly BibliotecaContext _context;
+
+        public AutoresController(BibliotecaContext context)
         {
-            
-            return _repositorio.ObtenerAutores() as List<Autor> ?? new List<Autor>();
-
+            _context = context;
         }
+
 
        
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var autor = _repositorio.ObtenerAutores();
-            return View(autor);
+            var autores = await _context.Autores.ToListAsync();
+            return View(autores);
         }
 
-        public IActionResult Details(int id) 
-        { 
-            var autor = _repositorio.ObtenerAutores().FirstOrDefault(x => x.ID == id);
+        public async Task<IActionResult> Details(int id) 
+        {
+            var autor = await _context.Autores.FindAsync(id);
             if(autor == null)
             {
                 return NotFound();
@@ -47,29 +57,20 @@ namespace BibliotecaPrjt.Controllers
         }
 
        
-        //[HttpPost]
-       // [ValidateAntiForgeryToken]
-       // public IActionResult Create(Autor autor)
-       // {
-         //   if (!ModelState.IsValid)
-         //   {
-               // return View(autor);
-          //  }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Autor autor)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(autor);
+            }
 
-          //  if(_repositorio.Any())
-           // {
-           //     autor.ID = _autores.Max(x => x.ID) + 1;
-           // }
-           // else
-            //{
-            //    autor.ID = 1;
-            //}
+            _context.Autores.Add(autor);
+            await _context.SaveChangesAsync();
 
-            
-
-           // _autores.Add(autor);
-            //return RedirectToAction(nameof(Index));
-       // }
+            return RedirectToAction(nameof(Index));
+        }
         
         /*
         public IActionResult Edit(int id) 

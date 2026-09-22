@@ -4,16 +4,28 @@
     ViewData["Title"] = "Detalles del Autor";
 }
 
-<h1>@Model.Nombre</h1>
-<dl class="row">
-    <dt>Nacionalidad</dt>
-    <dd>@Model.Nacionalidad</dd>
 
-    <dt>Fecha de Nacimiento</dt>
-    <dd>@Model.FechaDeNacimiento.ToString("yyyy-MM-dd")</dd>
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h2>@Model.Nombre</h2>
+        <h6 class="card-subtitle mb-3 text-muted">@Model.Nacionalidad</h6>
+         <dl class="row">
+    <dt class="col-sm-4">Fecha de Nacimiento</dt>
+    <dd class="col-sm-8">@Model.FechaDeNacimiento.ToString("yyyy-MM-dd")</dd>
 
-    <dt>Edad</dt>
-    <dd>@(DateTime.Now.Year - Model.FechaDeNacimiento.Year)</dd>
+    <dt class="col-sm-4">Edad</dt>
+    <dd class="col-sm-8">@(DateTime.Now.Year - Model.FechaDeNacimiento.Year)</dd>
 </dl>
 
-<a asp-action="Index" class="btn btn-primary">Volver al listado</a>
+<div class="d-flex gap-2">
+    <a class="btn btn-outline-secondary swal-edit-link" asp-action="Edit" asp-route-id="@Model.ID">Editar</a>
+    <form asp-action="Delete" asp-route-id="@Model.ID" method="post" class="swal-delete-form d-inline">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+    </form>
+    <a asp-action="Index" class="btn btn-primary">Volver al listado</a>
+</div>
+    </div>
+</div>
+
+

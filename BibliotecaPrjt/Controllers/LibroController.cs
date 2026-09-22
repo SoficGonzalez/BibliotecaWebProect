@@ -97,10 +97,10 @@ namespace BibliotecaPrjt.Controllers
         }
 
 
-        //Non functional
-       /* public IActionResult Edit(int id)
+        
+       public async Task<IActionResult> Edit(int id)
         {
-            var libro = _repositorio.ObtenerTodos().FirstOrDefault(_ => _.ID == id);
+            var libro = await _context.Libros.FindAsync(id);
             if (libro == null)
             {
                 return NotFound();
@@ -109,10 +109,10 @@ namespace BibliotecaPrjt.Controllers
         }
 
 
-        //Non functional
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Libro libro)
+        public async Task<IActionResult> Edit(int id, Libro libro)
         {
             if (id != libro.ID)
             {
@@ -124,23 +124,20 @@ namespace BibliotecaPrjt.Controllers
                 return View(libro);
             }
 
-            var existente = _repositorio.ObtenerTodos().FirstOrDefault(x => x.ID == id);
-            if (existente == null)
+            var existente = await _context.Libros.AnyAsync(a => a.ID == id);
+            if(!existente)
             {
                 return NotFound();
             }
 
-            existente.Titulo = libro.Titulo;
-            existente.Autor = libro.Autor;
-            existente.Categoria = libro.Categoria;
-            existente.Precio = libro.Precio;
-            existente.Disponible = libro.Disponible;
+            _context.Update(libro);
+            await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }
 
-        //Non functional
-        public IActionResult Delete(int id)
+        
+        /*public IActionResult Delete(int id)
         {
             var libro = _repositorio.ObtenerTodos().FirstOrDefault(x => x.ID == id);
             if (libro == null)
@@ -148,27 +145,24 @@ namespace BibliotecaPrjt.Controllers
                 return NotFound();
             }
             return View(libro);
-        }
+        }*/
 
-        //Non functional
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var listaLibros = ObtenerListaInterna();
-            var libro = listaLibros.FirstOrDefault(x => x.ID == id);
-            if (libro == null)
+            var listaLibros = await _context.Libros.FindAsync(id);
+            if (listaLibros == null)
             {
                 return NotFound();
             }
 
-            listaLibros.Remove(libro);
+            _context.Libros.Remove(listaLibros);
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
 
-        }*/
-
-
-
+        }
     }
 
 

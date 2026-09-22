@@ -487,3 +487,127 @@ body {
     gap: 1rem;
     margin-top: 1rem;
 }
+
+/* Details de libro */
+.details-page {
+    display: flex;
+    gap: 4rem;
+    max-width: 1000px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+    align-items: flex-start;
+}
+
+.details-image-col {
+    flex: 1;
+}
+
+.details-image {
+    width: 100%;
+    max-width: 360px;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
+}
+
+.details-image-vacia {
+    width: 100%;
+    max-width: 360px;
+    aspect-ratio: 2 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f2f2f2;
+    color: #888;
+    border-radius: 4px;
+}
+
+.details-info-col {
+    flex: 1;
+    padding-top: 0.5rem;
+}
+
+.details-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 3px;
+    color: #fff;
+    margin-bottom: 1.25rem;
+}
+
+.details-titulo {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 2.2rem;
+    line-height: 1.2;
+    margin: 0 0 0.4rem 0;
+}
+
+.details-autor {
+    font-size: 1.05rem;
+    color: #666;
+    margin: 0 0 2rem 0;
+}
+
+.details-meta {
+    border-top: 1px solid #e5e5e5;
+    padding-top: 1.25rem;
+}
+
+.details-meta-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.details-meta-label {
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: none;
+}
+
+.details-meta-valor {
+    font-size: 0.95rem;
+    color: #222;
+    font-weight: 600;
+}
+
+.details-volver {
+    display: inline-block;
+    margin-top: 2.5rem;
+    font-size: 0.9rem;
+    color: #444;
+    text-decoration: none;
+}
+
+    .details-volver:hover {
+        text-decoration: underline;
+    }
+
+@media (max-width: 768px) {
+    .details-page {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .details-image, .details-image-vacia {
+        max-width: 280px;
+        margin: 0 auto;
+    }
+}
+
+/* Link de referencia en la card */
+.libro-ref {
+    font-size: 0.78rem;
+    color: #888;
+    text-decoration: none;
+    border-bottom: 1px dotted #bbb;
+    margin-top: 0.35rem;
+}
+
+    .libro-ref:hover {
+        color: #333;
+        border-bottom-color: #333;
+    }

@@ -1,22 +1,41 @@
 ﻿@model BibliotecaPrjt.Models.Libro
 
 @{
-    ViewData["Title"] = "Sobre el libro";
+    ViewData["Title"] = Model.Titulo;
+    Layout = "_Layout";
 }
 
-<h1>@Model.Titulo</h1>
-<dl class="row">
-    <dt>Autor</dt>
-    <dd>@Model.Autor</dd>
+<div class="details-page">
+    <div class="details-image-col">
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <img src="@Model.ImageUrl" alt="Portada de @Model.Titulo" class="details-image" />
+        }
+        else
+        {
+            <div class="details-image-vacia">Sin imagen</div>
+        }
+    </div>
 
-    <dt>Categoria</dt>
-    <dd>@Model.Categoria</dd>
+    <div class="details-info-col">
+        <span class="details-badge @(Model.Disponible ? "bg-success" : "bg-danger")">
+            @(Model.Disponible ? "Disponible" : "Prestado")
+        </span>
 
-    <dt>Precio</dt>
-    <dd>@Model.Precio</dd>
+        <h1 class="details-titulo">@Model.Titulo</h1>
+        <p class="details-autor">@Model.Autor</p>
 
-    <dt>Estado</dt>
-    <dd>@Model.Disponible</dd>
-</dl>
+        <div class="details-meta">
+            <div class="details-meta-item">
+                <span class="details-meta-label">Categoria</span>
+                <span class="details-meta-valor">@Model.Categoria</span>
+            </div>
+            <div class="details-meta-item">
+                <span class="details-meta-label">Precio</span>
+                <span class="details-meta-valor">$@Model.Precio</span>
+            </div>
+        </div>
 
-<a asp-action="Index" class="btn btn-primary">Volver al listado</a>
+        <a asp-action="Index" class="details-volver">← Volver al catalogo</a>
+    </div>
+</div>

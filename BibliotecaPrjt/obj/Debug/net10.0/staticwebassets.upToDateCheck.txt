@@ -1,9 +1,14 @@
 wwwroot\css\site.css
 wwwroot\favicon.ico
+wwwroot\images\libros\20c5cef7-6da6-4892-891c-bb24559f337d.jpg
+wwwroot\images\libros\646c7f0d-1032-4b18-a337-a2c0071adaef.jpg
 wwwroot\images\libros\6be933a0-e558-498a-93b9-3c30db715af7.jpg
 wwwroot\images\libros\6fc9b2b3-a9c3-4590-9167-4f9d2b41bf8f.jpg
+wwwroot\images\libros\790cb987-cd8a-4205-a19c-2f1ecc5affc9.jpg
 wwwroot\images\libros\86bcdda8-a493-4c4a-b5eb-a54ce8e2f3b5.jpg
 wwwroot\images\libros\a40863e5-3c8c-4333-947d-f66d2bb0437d.jpg
+wwwroot\images\libros\e7f6e8d5-4bfd-4e1f-afac-63439ed89f56.png
+wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css
@@ -64,7 +69,6 @@ wwwroot\lib\jquery\dist\jquery.slim.js
 wwwroot\lib\jquery\dist\jquery.slim.min.js
 wwwroot\lib\jquery\dist\jquery.slim.min.map
 wwwroot\lib\jquery\LICENSE.txt
-wwwroot\js\site.js
 C:\Users\sofia\source\repos\BibliotecaWebProect\BibliotecaPrjt\wwwroot\css\site.css
 C:\Users\sofia\source\repos\BibliotecaWebProect\BibliotecaPrjt\wwwroot\favicon.ico
 C:\Users\sofia\source\repos\BibliotecaWebProect\BibliotecaPrjt\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css

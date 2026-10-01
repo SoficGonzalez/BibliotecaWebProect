@@ -1,6 +1,7 @@
 using BibliotecaPrjt.Repositories;
 using BibliotecaPrjt.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,13 @@ builder.Services.AddDbContext<BibliotecaContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("BibliotecaDB"))
 );
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<BibliotecaContext>();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+});
+    
 
 var app = builder.Build();
 
@@ -28,6 +36,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapStaticAssets();
 

@@ -1,0 +1,44 @@
+﻿@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Iniciar sesion";
+}
+
+<div class="form-auth-wrapper">
+    <h1 class="form-auth-titulo">Iniciar sesion</h1>
+
+    <form asp-action="Login" method="post" class="form-auth">
+        <input type="hidden" asp-for="ReturnUrl" />
+
+        <div asp-validation-summary="ModelOnly" class="form-auth-error"></div>
+
+        <div class="form-libro-campo">
+            <label asp-for="UserNameOrEmail"></label>
+            <input asp-for="UserNameOrEmail" class="form-control" autocomplete="username" placeholder="Usuario o correo" />
+            <span asp-validation-for="UserNameOrEmail"></span>
+        </div>
+
+        <div class="form-libro-campo">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" autocomplete="current-password" placeholder="••••••••" />
+            <span asp-validation-for="Password"></span>
+        </div>
+
+        <div class="form-auth-recordar">
+            <label class="form-check">
+                <input asp-for="RememberMe" class="form-check-input" />
+                <span class="form-check-label">Recordar</span>
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary form-auth-submit">Log in</button>
+
+        <p class="form-auth-footer">
+            ¿No tienes cuenta? <a asp-action="Register">Crea una</a>
+        </p>
+    </form>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

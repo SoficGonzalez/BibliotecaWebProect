@@ -4,10 +4,12 @@ using BibliotecaPrjt.Repositories;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using BibliotecaPrjt.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace BibliotecaPrjt.Controllers
 {
+    [Authorize]
     public class LibroController : Controller
     {
         /* private readonly IRepositorioLibro _repositorio;
@@ -46,6 +48,7 @@ namespace BibliotecaPrjt.Controllers
             return View(libro);
         }
 
+        [Authorize(Roles = "Administrador")]
         public IActionResult Create()
         {
 
@@ -54,6 +57,7 @@ namespace BibliotecaPrjt.Controllers
 
        
         [HttpPost]
+        [Authorize(Roles = "Administrador")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Libro libro, IFormFile imagenPortada)
         {
@@ -97,8 +101,9 @@ namespace BibliotecaPrjt.Controllers
         }
 
 
-        
-       public async Task<IActionResult> Edit(int id)
+
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> Edit(int id)
         {
             var libro = await _context.Libros.FindAsync(id);
             if (libro == null)
@@ -112,6 +117,7 @@ namespace BibliotecaPrjt.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(int id, Libro libro)
         {
             if (id != libro.ID)
@@ -150,6 +156,7 @@ namespace BibliotecaPrjt.Controllers
         
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var listaLibros = await _context.Libros.FindAsync(id);

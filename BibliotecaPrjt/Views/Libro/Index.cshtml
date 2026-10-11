@@ -7,7 +7,10 @@
     <div class="catalogo-header-spacer"></div>
     <h2 class="catalogo-titulo">@ViewData["Title"]</h2>
         <div class="catalogo-btn-wrapper">
-        <a class="btn btn-primary" asp-action="Create">Nuevo Libro +</a>
+            @if (User.IsInRole("Administrador"))
+            {
+                <a class="btn btn-primary" asp-action="Create">Nuevo Libro +</a>
+            }
         </div>
 </div>
 
@@ -36,13 +39,17 @@
             <a asp-action="Details" asp-route-id="@libro.ID" class="libro-ref">Ver mas</a>
             <div class="libro-precio">$@libro.Precio</div>
 
-            <div class="libro-acciones">
+            @if (User.IsInRole("Administrador"))
+            {
+               <div class="libro-acciones">
                 <a class="btn btn-outline-primary btn-sm" asp-action="Edit" asp-route-id="@libro.ID">Editar</a>
                <form asp-action="Delete" asp-route-id="@libro.ID" method="post" class="swal-delete-form d-inline">
                             @Html.AntiForgeryToken()
                             <button type="submit" class="btn btn-danger">Eliminar</button>
                         </form>
-            </div>
+            </div> 
+            }
+            
         </div>
     }
 </div>

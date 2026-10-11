@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using BibliotecaPrjt.Models;
 
 namespace BibliotecaPrjt.Controllers
@@ -15,6 +16,7 @@ namespace BibliotecaPrjt.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login(string? returnUrl = null)
         {
             return View(new LoginViewModel
@@ -25,6 +27,7 @@ namespace BibliotecaPrjt.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
@@ -33,6 +36,7 @@ namespace BibliotecaPrjt.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
@@ -46,7 +50,7 @@ namespace BibliotecaPrjt.Controllers
             if(user is not null)
             {
                 var results = await _signInManager.PasswordSignInAsync(
-                    user, model.Password,model.RememberMe, lockoutOnFailure: false);
+                    user, model.Password,model.RememberMe, lockoutOnFailure: true);
 
                 if(results.Succeeded)
                 {
@@ -56,12 +60,19 @@ namespace BibliotecaPrjt.Controllers
                     }
                     return RedirectToAction("Index", "Home");
                 }
+
+                if(results.IsLockedOut)
+                {
+                    ModelState.AddModelError(string.Empty, "La cuenta esta bloqueada temporalmente por demasiados intentos fallidos");
+                    return View(model);
+                }
             }
             ModelState.AddModelError(string.Empty, "Las credenciales introducidas no son corectas.");
             return View(model);
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View(new RegisterViewModel());
@@ -69,6 +80,7 @@ namespace BibliotecaPrjt.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid)
@@ -86,6 +98,7 @@ namespace BibliotecaPrjt.Controllers
 
             if(result.Succeeded)
             {
+                await _userManager.AddToRoleAsync(user, "Usuario");
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return RedirectToAction("Index", "Home");
             }
@@ -96,6 +109,12 @@ namespace BibliotecaPrjt.Controllers
             }
 
             return View(model);
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

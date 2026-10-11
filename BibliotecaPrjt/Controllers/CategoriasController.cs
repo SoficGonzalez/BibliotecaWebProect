@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BibliotecaPrjt.Models;
 using Microsoft.Data.SqlClient;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BibliotecaPrjt.Controllers
 {
+    [Authorize]
     public class CategoriasController : Controller
     {
+
         private readonly string _connectionString;
 
         public CategoriasController(IConfiguration configuration)

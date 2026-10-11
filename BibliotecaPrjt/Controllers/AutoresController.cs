@@ -2,12 +2,15 @@
 using BibliotecaPrjt.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using BibliotecaPrjt.Data;
 
 namespace BibliotecaPrjt.Controllers
 {
+    [Authorize]
     public class AutoresController : Controller
     {
+        
 
         /* public readonly IAutorService _repositorio;
 

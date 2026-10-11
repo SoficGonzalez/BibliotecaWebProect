@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BibliotecaPrjt")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2d04b8f06a3dcb6620b53440b5fc812887861233")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+55fa6f1547f16ff7ea5a3329e7253a8cf125cf90")]
 [assembly: System.Reflection.AssemblyProductAttribute("BibliotecaPrjt")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BibliotecaPrjt")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

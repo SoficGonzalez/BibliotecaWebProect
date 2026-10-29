@@ -9,7 +9,11 @@
             (@Model.Count())
         </small>
     </h1>
-    <a class="btn btn-primary" asp-action="Create">Nuevo Autor +</a>
+    @if (User.IsInRole("Administrador") || User.IsInRole("Bibliotecario"))
+    {
+        <a class="btn btn-primary" asp-action="Create">Nuevo Autor +</a>
+    }
+    
 </div>
 
 

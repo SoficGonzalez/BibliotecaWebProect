@@ -51,6 +51,27 @@ namespace BibliotecaPrjt.Migrations
                     b.ToTable("Autores");
                 });
 
+            modelBuilder.Entity("BibliotecaPrjt.Models.Categoria", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Categorias");
+                });
+
             modelBuilder.Entity("BibliotecaPrjt.Models.Libro", b =>
                 {
                     b.Property<int>("ID")

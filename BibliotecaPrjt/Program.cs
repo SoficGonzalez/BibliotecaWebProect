@@ -24,7 +24,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Account/Login";
-    options.AccessDeniedPath = "/Account/AccessDenied"; // corregido
+    options.AccessDeniedPath = "/Account/AccessDenied"; 
 });
 
 var app = builder.Build();
@@ -49,12 +49,18 @@ using (var scope = app.Services.CreateScope())
         await userManager.AddToRoleAsync(admin, "Administrador");
     }
 
-    
-    foreach (var user in userManager.Users.ToList())
+
+    var usuarios = await userManager.Users.ToListAsync();
+    foreach(var usuario in usuarios)
     {
-        if ((await userManager.GetRolesAsync(user)).Count == 0)
+        if((await userManager.GetRolesAsync(usuario)).Count ==0)
         {
-            await userManager.AddToRoleAsync(user, "Usuario");
+            var resultado = await userManager.AddToRoleAsync(usuario, "Usuario");
+            if(!resultado.Succeeded)
+            {
+                throw new InvalidOperationException(
+                    $"No se pudo asignar el rol Usuario a {usuario.UserName}:{string.Join(",", resultado.Errors.Select(e => e.Description))}");
+            }
         }
     }
 }

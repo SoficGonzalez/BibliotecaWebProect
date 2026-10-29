@@ -1,186 +1,184 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using BibliotecaPrjt.Models;
-using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using BibliotecaPrjt.Models;
+using BibliotecaPrjt.Data;
+using Microsoft.Extensions.Logging;
 
 namespace BibliotecaPrjt.Controllers
 {
     [Authorize]
     public class CategoriasController : Controller
     {
+        private readonly BibliotecaContext _context;
+        private readonly ILogger<CategoriasController> _logger;
 
-        private readonly string _connectionString;
-
-        public CategoriasController(IConfiguration configuration)
+        public CategoriasController(BibliotecaContext context, ILogger<CategoriasController> logger)
         {
-            _connectionString = configuration.GetConnectionString("BibliotecaDB");
+            _context = context;
+            _logger = logger;
         }
-        public IActionResult Index()
-        {
-            var categorias = new List<Categoria>();
-            
-            using(var conexion = new SqlConnection(_connectionString))
-            {
-                var sql = "SELECT ID, Nombre, Descripcion FROM Categorias";
-                using (var comando = new SqlCommand(sql,conexion))
-                {
-                    conexion.Open();
-                    using (var lector = comando.ExecuteReader())
-                    {
-                        while (lector.Read())
-                        {
-                            categorias.Add(new Categoria
-                            {
-                                ID = lector.GetInt32(0),
-                                Nombre = lector.GetString(1),
-                                Descripcion = lector.IsDBNull(2) ? null : lector.GetString(2)
-                            });
-                        }
 
-                    }
-                }
+        public async Task<IActionResult> Index()
+        {
+            _logger.LogInformation("Consultando el listado de categorias");
+
+            try
+            {
+                var categorias = await _context.Categorias.ToListAsync();
+                return View(categorias);
             }
-            return View(categorias);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Se produjo un error al consultar el listado de categorias");
+                throw;
+            }
         }
 
         public IActionResult Create()
         {
+            _logger.LogInformation("Iniciando la operacion de creacion de una categoria");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-
-        public IActionResult Create(Categoria categorias)
+        public async Task<IActionResult> Create(Categoria categoria)
         {
-            if(categorias == null || string.IsNullOrWhiteSpace(categorias.Nombre))
+            _logger.LogInformation("Iniciando la creacion de una categoria");
+
+            if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("Nombre", "El nombre es obligatorio");
-                return View(categorias);
+                _logger.LogWarning("La categoria enviada no cumple con los requisitos");
+                return View(categoria);
             }
 
-            using(var conexion = new SqlConnection(_connectionString))
+            try
             {
-                var sql = "INSERT INTO Categorias (Nombre, Descripcion) VALUES (@Nombre, @Descripcion)";
-                using (var comando = new SqlCommand(sql, conexion))
-                {
-                    comando.Parameters.AddWithValue("@Nombre", categorias.Nombre);
-                    comando.Parameters.AddWithValue("@Descripcion", (object)categorias.Descripcion ?? System.DBNull.Value);
+                _context.Categorias.Add(categoria);
+                await _context.SaveChangesAsync();
 
-                    conexion.Open();
-                    comando.ExecuteNonQuery();
-                }
+                TempData["SuccessMessage"] = "Categoria guardada correctamente.";
+                return RedirectToAction(nameof(Index));
             }
-            TempData["SuccessMessage"] = "Categoria guardada correctamente.";
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Se produjo un error al crear la categoria");
+                throw;
+            }
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            Categoria? categoria = null;
+            _logger.LogInformation("Iniciando la operacion de edicion de la categoria con identificador {CategoriaId}", id);
 
-            using (var conexion = new SqlConnection(_connectionString))
+            try
             {
-                var sql = "SELECT ID, Nombre, Descripcion FROM Categorias WHERE ID =@ID";
-                using (var comando = new SqlCommand(sql, conexion))
+                var categoria = await _context.Categorias.FindAsync(id);
+
+                if (categoria == null)
                 {
-                    comando.Parameters.AddWithValue("@ID", id);
-                    conexion.Open() ;
-                    using(var lector = comando.ExecuteReader())
-                    {
-                        if(lector.Read())
-                        {
-                            categoria = new Categoria
-                            {
-                                ID = lector.GetInt32(0),
-                                Nombre = lector.GetString(1),
-                                Descripcion = lector.IsDBNull(2) ? null : lector.GetString(2)
-                            };
-                        }
-                    }
+                    _logger.LogWarning("No se encontro la categoria solicitada con identificador {CategoriaId}", id);
+                    return NotFound();
                 }
+
+                return View(categoria);
             }
-            if(categoria == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                _logger.LogError(ex, "Se produjo un error al consultar la categoria para su edicion con identificador {CategoriaId}", id);
+                throw;
             }
-            return View(categoria);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Categoria categorias)
+        public async Task<IActionResult> Edit(int id, Categoria categoria)
         {
-            if(categorias == null || string.IsNullOrWhiteSpace(categorias.Nombre))
+            _logger.LogInformation("Iniciando la edicion de la categoria con identificador {CategoriaId}", id);
+
+            if (id != categoria.ID)
             {
-                ModelState.AddModelError("Nombre", "El nombre es obligatorio");
-                return View(categorias);
+                return BadRequest();
             }
-            using(var conexion = new SqlConnection(_connectionString))
+
+            if (!ModelState.IsValid)
             {
-                var sql = "UPDATE Categorias SET Nombre = @Nombre, Descripcion = @Descripcion WHERE ID = @ID";
-                using(var comando = new SqlCommand(sql,conexion))
+                return View(categoria);
+            }
+
+            try
+            {
+                var existe = await _context.Categorias.AnyAsync(c => c.ID == id);
+                if (!existe)
                 {
-                    comando.Parameters.AddWithValue("@Nombre", categorias.Nombre);
-                    comando.Parameters.AddWithValue("@Descripcion", (object?)categorias.Descripcion ?? DBNull.Value);
-                    comando.Parameters.AddWithValue("@ID", categorias.ID);
-
-                    conexion.Open();
-                    var filasAfectadas = comando.ExecuteNonQuery();
-
-                    if (filasAfectadas == 0)
-                        return NotFound();
+                    _logger.LogWarning("No se encontro la categoria solicitada con identificador {CategoriaId}", id);
+                    return NotFound();
                 }
+
+                _context.Update(categoria);
+                await _context.SaveChangesAsync();
+
+                TempData["SuccessMessage"] = "Categoria actualizada correctamente.";
+                return RedirectToAction(nameof(Index));
             }
-            TempData["SuccessMessage"] = "Categoria actualizada correctamente.";
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Se produjo un error al editar la categoria con identificador {CategoriaId}", id);
+                throw;
+            }
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            Categoria? categoria = null;
-            using (var conexion = new SqlConnection(_connectionString))
-            {
-                var sql = "SELECT ID, Nombre, Descripcion FROM Categorias WHERE ID = @ID";
-                using ( var comando = new SqlCommand( sql,conexion))
-                {
-                    comando.Parameters.AddWithValue("@ID", id);
-                    conexion.Open();
-                    using(var lector = comando.ExecuteReader())
-                    {
-                        if(lector.Read())
-                        {
-                            categoria = new Categoria
-                            {
-                                ID = lector.GetInt32(0),
-                                Nombre = lector.GetString(1),
-                                Descripcion = lector.IsDBNull(2) ? null : lector.GetString(2)
-                            };
-                        }
-                    }
-                }
-            }
-            if( categoria == null ) 
-                return NotFound();
+            _logger.LogInformation("Consultando la categoria con identificador {CategoriaId} para su eliminacion", id);
 
-            return View(categoria);
+            try
+            {
+                var categoria = await _context.Categorias.FindAsync(id);
+
+                if (categoria == null)
+                {
+                    _logger.LogWarning("No se encontro la categoria solicitada con identificador {CategoriaId}", id);
+                    return NotFound();
+                }
+
+                return View(categoria);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Se produjo un error al consultar la categoria con identificador {CategoriaId}", id);
+                throw;
+            }
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirm(int id)
+        public async Task<IActionResult> DeleteConfirm(int id)
         {
-            using (var conexion = new SqlConnection(_connectionString))
+            _logger.LogInformation("Iniciando la eliminacion de la categoria con identificador {CategoriaId}", id);
+
+            try
             {
-                var sql = "DELETE FROM Categorias WHERE ID = @ID";
-                using(var comando = new SqlCommand(sql, conexion))
+                var categoria = await _context.Categorias.FindAsync(id);
+
+                if (categoria == null)
                 {
-                    comando.Parameters.AddWithValue("@ID", id);
-                    conexion.Open();
-                    comando.ExecuteNonQuery();
+                    _logger.LogWarning("No se encontro la categoria solicitada con identificador {CategoriaId}", id);
+                    return NotFound();
                 }
+
+                _context.Categorias.Remove(categoria);
+                await _context.SaveChangesAsync();
+
+                TempData["SuccessMessage"] = "Categoria eliminada correctamente.";
+                return RedirectToAction(nameof(Index));
             }
-            TempData["SuccessMessage"] = "Categoria eliminada correctamente";
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Se produjo un error al eliminar la categoria con identificador {CategoriaId}", id);
+                throw;
+            }
         }
     }
 }

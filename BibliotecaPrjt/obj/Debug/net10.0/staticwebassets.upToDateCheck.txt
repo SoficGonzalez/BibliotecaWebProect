@@ -7,6 +7,7 @@ wwwroot\images\libros\6fc9b2b3-a9c3-4590-9167-4f9d2b41bf8f.jpg
 wwwroot\images\libros\790cb987-cd8a-4205-a19c-2f1ecc5affc9.jpg
 wwwroot\images\libros\86bcdda8-a493-4c4a-b5eb-a54ce8e2f3b5.jpg
 wwwroot\images\libros\a40863e5-3c8c-4333-947d-f66d2bb0437d.jpg
+wwwroot\images\libros\cb8f0b98-cd2d-4e7f-ac1c-3dfd3d22f954.jpg
 wwwroot\images\libros\e7f6e8d5-4bfd-4e1f-afac-63439ed89f56.png
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css

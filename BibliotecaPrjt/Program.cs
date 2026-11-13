@@ -2,10 +2,13 @@ using BibliotecaPrjt.Repositories;
 using BibliotecaPrjt.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using QuestPDF.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+
+QuestPDF.Settings.License = LicenseType.Community;
 
 builder.Services.AddSingleton<IRepositorioLibro, RepositorioEn>();
 builder.Services.AddSingleton<IAutorService, AutorService>();

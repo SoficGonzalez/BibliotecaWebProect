@@ -11,6 +11,15 @@
     </h1>
     @if (User.IsInRole("Administrador") || User.IsInRole("Bibliotecario"))
     {
+        <div class="d-flex gap-2">
+            <a class="btn btn-outline-danger" asp-action="Report" target="_blank" rel="noopener">
+                Abrir reporte
+            </a>
+            <a class="btn btn-outline-danger" asp-action="ReportDowload" target="_blank" rel="noopener">
+                Descargar PDF
+            </a>
+        </div>
+
         <a class="btn btn-primary" asp-action="Create">Nuevo Autor +</a>
     }
     

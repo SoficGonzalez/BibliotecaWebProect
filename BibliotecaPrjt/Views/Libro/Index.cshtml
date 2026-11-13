@@ -6,13 +6,41 @@
 <div class="catalogo-header">
     <div class="catalogo-header-spacer"></div>
     <h2 class="catalogo-titulo">@ViewData["Title"]</h2>
-        <div class="catalogo-btn-wrapper">
-            @if (User.IsInRole("Administrador"))
-            {
-                <a class="btn btn-primary" asp-action="Create">Nuevo Libro +</a>
-            }
-        </div>
+    <div class="catalogo-btn-wrapper">
+        @if (User.IsInRole("Administrador"))
+        {
+            <a class="btn btn-primary text-nowrap" asp-action="Create">Nuevo Libro +</a>
+        }
+    </div>
 </div>
+
+@if (User.IsInRole("Administrador") || User.IsInRole("Bibliotecario"))
+{
+    <form method="get" class="d-flex flex-wrap justify-content-center align-items-center gap-2 bg-light border rounded-3 p-2 mx-auto mb-4" style="max-width: 760px;">
+        <select name="autor" class="form-select form-select-sm w-auto" aria-label="Filtrar por autor">
+            <option value="">Todos los autores</option>
+            @foreach (var a in Model.Select(l => l.Autor).Distinct().OrderBy(x => x))
+            {
+                <option value="@a">@a</option>
+            }
+        </select>
+
+        <div class="vr d-none d-md-block"></div>
+
+        <button type="submit" asp-action="Report" formtarget="_blank"
+                class="btn btn-outline-danger btn-sm text-nowrap">
+            Ver PDF
+        </button>
+        <button type="submit" asp-action="ReportDownload"
+                class="btn btn-danger btn-sm text-nowrap">
+            Generar reporte PDF
+        </button>
+        <button type="submit" asp-action="ExportarExcel"
+                class="btn btn-success btn-sm text-nowrap">
+            Exportar a Excel
+        </button>
+    </form>
+}
 
 <div class="bento-grid">
     @foreach (var libro in Model)
